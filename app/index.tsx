@@ -22,7 +22,25 @@ export default function LoginScreen() {
     if(isBiometricSupported) {
       supportedBiometrics = await LocalAuthentication.supportedAuthenticationTypesAsync();
     }
+    if(!isBiometricSupported || (supportedBiometrics && supportedBiometrics.length === 0)) {
+      sendAlert({
+        title: 'Error',
+        message: 'No biometric authentication available',
+        onPress: () => {},
+        buttonText: 'OK',
+      });
+      return;
+    }
     const isBiometricEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if(!isBiometricEnrolled) {
+      sendAlert({
+        title: 'Error',
+        message: 'No biometric authentication enrolled',
+        onPress: () => {},
+        buttonText: 'OK',
+      });
+      return;
+    }
     const biometricAuth = await LocalAuthentication.authenticateAsync({
       promptMessage: 'Authenticate',
       fallbackLabel: 'Use Passcode',
@@ -44,7 +62,7 @@ export default function LoginScreen() {
     (async() => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricSupported(compatible);
-    })
+    })();
   },[])
 
   return (
