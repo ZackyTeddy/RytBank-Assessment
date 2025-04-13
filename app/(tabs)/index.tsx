@@ -7,7 +7,6 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import { Transaction } from '@/types/transaction';
 import { getAllTransactions } from '@/server/transactions';
 import { cyberpunkColors } from '@/components/styles';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function TransactionsScreen() {
   const [verified, setVerified] = useState(false);
