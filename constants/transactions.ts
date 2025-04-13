@@ -1,139 +1,140 @@
-import { createTransaction } from "@/server/transactions";
 import { Transaction, TransactionType } from "@/types/transaction";
+
+import 'react-native-get-random-values';
 import { nanoid } from "nanoid";
 
 export const TRANSACTIONS: Transaction[] = [
-  createTransaction({
+  {
     id: nanoid(),
     description: "Horizon ZD + FW Purchase",
     amount: 59.99,
     type: TransactionType.DEBIT,
     date: "2025-01-15",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "The Division Agent Watch",
     amount: 299.89,
     type: TransactionType.DEBIT,
     date: "2025-01-14",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Virtual Reality Session",
     amount: 29.99,
     type: TransactionType.DEBIT,
     date: "2025-01-13",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Crypto Mining Rewards",
     amount: 150.0,
     type: TransactionType.CREDIT,
     date: "2025-01-12",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Copilot Subscription",
     amount: 999.9,
     type: TransactionType.DEBIT,
     date: "2025-01-11",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "HoloLens Purchase",
     amount: 499.99,
     type: TransactionType.DEBIT,
     date: "2025-01-10",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Cursor Upgrade",
     amount: 199.99,
     type: TransactionType.DEBIT,
     date: "2025-01-09",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Salary Payment",
     amount: 9500.0,
     type: TransactionType.CREDIT,
     date: "2025-01-08",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Rent Payment",
     amount: 1200.0,
     type: TransactionType.DEBIT,
     date: "2025-01-07",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Grocery Shopping",
     amount: 150.0,
     type: TransactionType.DEBIT,
     date: "2025-01-06",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Utility Bill Payment",
     amount: 200.0,
     type: TransactionType.DEBIT,
     date: "2025-01-05",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Dinner Date",
     amount: 75.0,
     type: TransactionType.DEBIT,
     date: "2025-01-04",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Movie Tickets",
     amount: 30.0,
     type: TransactionType.DEBIT,
     date: "2025-01-03",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Ghost of Tsushima Purchase",
     amount: 180.0,
     type: TransactionType.DEBIT,
     date: "2025-01-03",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "PlayStation 5 Cashback",
     amount: 499.99,
     type: TransactionType.CREDIT,
     date: "2025-01-02",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Beat Saber X Upgrade",
     amount: 39.99,
     type: TransactionType.DEBIT,
     date: "2025-01-01",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Bank Transfer from John Doe",
     amount: 5000.0,
     type: TransactionType.CREDIT,
     date: "2025-01-01",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "Technoblade Memorial Fund",
     amount: 199.99,
     type: TransactionType.DEBIT,
     date: "2025-01-01",
-  }),
-  createTransaction({
+  },
+  {
     id: nanoid(),
     description: "TheRadBrad Membership",
     amount: 100.0,
     type: TransactionType.DEBIT,
     date: "2025-01-01",
-  }),
+  },
 ];
