@@ -6,12 +6,7 @@ import { LogOut } from 'lucide-react-native';
 export default function ProfileScreen() {
   // FIXME: logout not working
   const handleLogout = () => {
-    router.replace({
-      pathname: '/',
-      params: {
-        reset: 'true',
-      }
-    });
+    router.replace('/(auth)');
   };
 
   return (
