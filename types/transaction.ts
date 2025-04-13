@@ -5,9 +5,6 @@ export interface Transaction {
 	type: TransactionType;
 	date: string;
 }
-export interface TransactionCreate extends Omit<Transaction, 'id'> {
-	id: string;
-}
 
 export enum TransactionType {
 	DEBIT = "DEBIT",

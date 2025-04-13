@@ -33,9 +33,9 @@ export default function TransactionDetails() {
           <Text style={styles.label}>AMOUNT</Text>
           <Text style={[
             styles.amount,
-            { color: transaction.type === TransactionType.DEBIT ? '#4CAF50' : '#e94560' }
+            { color: transaction.type === TransactionType.CREDIT ? '#4CAF50' : '#e94560' }
           ]}>
-            {transaction.type === TransactionType.DEBIT ? '+' : '-'}${transaction.amount}
+            {transaction.type === TransactionType.CREDIT ? '+' : '-'}${transaction.amount}
           </Text>
 
           <Text style={styles.label}>TYPE</Text>
