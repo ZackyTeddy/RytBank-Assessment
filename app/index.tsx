@@ -1,6 +1,7 @@
+import { cyberpunkColors } from '@/components/styles';
 import { router, useRootNavigationState } from 'expo-router';
 import { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function BaseIndex() {
   const rootNavigation = useRootNavigationState();
@@ -12,8 +13,24 @@ export default function BaseIndex() {
   }, [rootNavigation]);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Redirecting...</Text>
+    <View style={styles.container}>
+      <Text style={styles.text} >Redirecting...</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		padding: 20,
+		backgroundColor: cyberpunkColors.background,
+	},
+	text: {
+		fontFamily: "Orbitron",
+		fontSize: 16,
+		color: cyberpunkColors.errorText,
+		marginBottom: 15,
+	},
+});

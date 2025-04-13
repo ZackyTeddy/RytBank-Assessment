@@ -1,3 +1,4 @@
+import { cyberpunkColors } from '@/components/styles';
 import { Tabs } from 'expo-router';
 import { CreditCard, User } from 'lucide-react-native';
 
@@ -7,11 +8,11 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#16213e',
-          borderTopColor: '#e94560',
+          backgroundColor: cyberpunkColors.surface,
+          borderTopColor: cyberpunkColors.neonPurple,
           borderTopWidth: 1,
         },
-        tabBarActiveTintColor: '#e94560',
+        tabBarActiveTintColor: cyberpunkColors.neonPurple,
         tabBarInactiveTintColor: '#666',
       }}>
       <Tabs.Screen

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
@@ -6,6 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { Transaction } from '@/types/transaction';
 import { getAllTransactions } from '@/server/transactions';
+import { cyberpunkColors } from '@/components/styles';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function TransactionsScreen() {
   const [verified, setVerified] = useState(false);
@@ -44,7 +46,7 @@ export default function TransactionsScreen() {
       onPress={() => handleTransactionPress(item.id)}
     >
       <LinearGradient
-        colors={['rgba(233, 69, 96, 0.1)', 'rgba(22, 33, 62, 0.1)']}
+        colors={['rgba(203, 56, 186, 0.1)', 'rgba(22, 33, 62, 0.1)']}
         style={styles.gradientCard}
       >
         <View style={styles.transactionContent}>
@@ -56,14 +58,29 @@ export default function TransactionsScreen() {
     </TouchableOpacity>
   );
 
+  const [transactionsList, setTransactionsList] = useState<Transaction[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const getTransactions = async () => {
+    setIsRefreshing(true);
+    const transactions = await getAllTransactions();
+    setTransactionsList(transactions);
+    setIsRefreshing(false);
+  };
+
+  useEffect(() => {
+    getTransactions();
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TRANSACTIONS</Text>
       <FlatList
-        data={getAllTransactions()}
+        data={transactionsList}
         renderItem={renderTransaction}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
+        onRefresh={getTransactions}
+        refreshing={isRefreshing}
       />
     </View>
   );
@@ -72,13 +89,13 @@ export default function TransactionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: cyberpunkColors.background,
     padding: 20,
   },
   title: {
     fontFamily: 'Orbitron-Bold',
     fontSize: 28,
-    color: '#e94560',
+    color: cyberpunkColors.neonPurple,
     marginBottom: 20,
   },
   listContainer: {
@@ -90,7 +107,7 @@ const styles = StyleSheet.create({
   gradientCard: {
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#e94560',
+    borderColor: cyberpunkColors.neonBlue,
   },
   transactionContent: {
     padding: 20,
@@ -104,7 +121,7 @@ const styles = StyleSheet.create({
   amount: {
     fontFamily: 'Orbitron',
     fontSize: 20,
-    color: '#e94560',
+    color: cyberpunkColors.neonBlue,
     marginBottom: 8,
   },
   date: {
