@@ -1,7 +1,7 @@
 import { TRANSACTIONS } from '@/constants/transactions';
-import { Transaction, TransactionCreate } from '@/types/transaction';
+import { Transaction } from '@/types/transaction';
 
-export function createTransaction(data: TransactionCreate): Transaction {
+export function createTransaction(data: Transaction): Transaction {
   return {
     id: data.id,
     description: data.description,
