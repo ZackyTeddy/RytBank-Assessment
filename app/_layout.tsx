@@ -6,9 +6,13 @@ import {
   Orbitron_700Bold,
 } from "@expo-google-fonts/orbitron";
 import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { useFrameworkReady } from "@/hooks/useFrameworkReady";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
+  useFrameworkReady();
+
   const [fontsLoaded] = useFonts({
     Orbitron: Orbitron_400Regular,
     "Orbitron-Bold": Orbitron_700Bold,
@@ -21,7 +25,7 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <Stack
         screenOptions={{
           headerShown: false,
@@ -55,7 +59,7 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="light" />
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
