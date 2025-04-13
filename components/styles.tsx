@@ -11,6 +11,11 @@ export const cyberpunkColors = {
 };
 
 export const styles = StyleSheet.create({
+  global: {
+    color: cyberpunkColors.textPrimary,
+    fontFamily: 'Orbitron_500Medium',
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     backgroundColor: cyberpunkColors.background,
@@ -65,6 +70,7 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   stepContainer: {
+    flex: 1,
     gap: 8,
     marginBottom: 8,
   },
@@ -76,8 +82,20 @@ export const styles = StyleSheet.create({
     position: 'absolute',
   },
   biometricButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: cyberpunkColors.neonPurple,
     padding: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: cyberpunkColors.neonPurple,
+    borderRadius: 8,
+    padding: 12,
+    color: cyberpunkColors.textPrimary,
+    fontFamily: 'Orbitron_500Medium',
+    minWidth: "75%",
+    maxWidth: "75%",
   }
 });

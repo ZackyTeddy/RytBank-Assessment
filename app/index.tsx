@@ -1,85 +1,166 @@
-import { Image, StyleSheet, Platform, Button, Pressable } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconFingerprint } from '@tabler/icons-react-native';
-import * as LocalAuthentication from 'expo-local-authentication';
 import { useEffect, useState } from 'react';
-import sendAlert from '@/lib/util/sendAlert';
+import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import {styles} from '@/components/styles';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Lock, Fingerprint } from 'lucide-react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
 
-export default function LoginScreen() {
-
-  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
-
-  const handleBiometricsAuth = async () => {
-    const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
-
-    let supportedBiometrics;
-    if(isBiometricSupported) {
-      supportedBiometrics = await LocalAuthentication.supportedAuthenticationTypesAsync();
-    }
-    if(!isBiometricSupported || (supportedBiometrics && supportedBiometrics.length === 0)) {
-      sendAlert({
-        title: 'Error',
-        message: 'No biometric authentication available',
-        onPress: () => {},
-        buttonText: 'OK',
-      });
-      return;
-    }
-    const isBiometricEnrolled = await LocalAuthentication.isEnrolledAsync();
-    if(!isBiometricEnrolled) {
-      sendAlert({
-        title: 'Error',
-        message: 'No biometric authentication enrolled',
-        onPress: () => {},
-        buttonText: 'OK',
-      });
-      return;
-    }
-    const biometricAuth = await LocalAuthentication.authenticateAsync({
-      promptMessage: 'Authenticate',
-      fallbackLabel: 'Use Passcode',
-      cancelLabel: 'Cancel',
-      disableDeviceFallback: true,
-    });
-
-    if(biometricAuth.success) {
-      sendAlert({
-        title: 'Success',
-        message: 'Authentication successful',
-        onPress: () => { router.replace('/(tabs)') },
-        buttonText: 'Enter App',
-      });
-    }
-  } 
+export default function AuthScreen() {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [hasBiometrics, setHasBiometrics] = useState(false);
 
   useEffect(() => {
-    (async() => {
-      const compatible = await LocalAuthentication.hasHardwareAsync();
-      setIsBiometricSupported(compatible);
-    })();
-  },[])
+    checkBiometrics();
+  }, []);
+
+  const checkBiometrics = async () => {
+    const compatible = await LocalAuthentication.hasHardwareAsync();
+    const enrolled = await LocalAuthentication.isEnrolledAsync();
+    setHasBiometrics(compatible && enrolled);
+  };
+
+  const handleBiometricAuth = async () => {
+    try {
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Authenticate to view transactions',
+        fallbackLabel: 'Use password'
+      });
+
+      if (result.success) {
+        router.replace('/(tabs)');
+      }
+    } catch (err) {
+      setError('Authentication failed. Please try again.');
+    }
+  };
+
+  const handlePasswordAuth = () => {
+    if (password === process.env.EXPO_PUBLIC_PASSWORD) {
+      router.replace('/(tabs)');
+    } else {
+      setError('Invalid password');
+    }
+  };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title" style={styles.text}>Welcome</ThemedText>
-        <Pressable onPress={handleBiometricsAuth} style={styles.biometricButton}>
-          <IconFingerprint size={28} color="#FFFFFF" />  
-        </Pressable>        
-      </ThemedView>
-    </ParallaxScrollView>
+    <LinearGradient
+      colors={['#1a1a2e', '#16213e']}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <Text style={styles.title}>REALLY SUPER SECURE TRANSACTIONS</Text>
+        
+        {hasBiometrics && (
+          <TouchableOpacity 
+            style={styles.biometricButton}
+            onPress={handleBiometricAuth}
+          >
+            <Fingerprint size={32} color="#e94560" />
+            <Text style={styles.buttonText}>Use Biometrics</Text>
+          </TouchableOpacity>
+        )}
+
+        <View style={styles.passwordContainer}>
+          <Lock size={24} color="#e94560" style={styles.lockIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Password"
+            placeholderTextColor="#666"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+
+        <TouchableOpacity 
+          style={styles.loginButton}
+          onPress={handlePasswordAuth}
+        >
+          <Text style={styles.loginButtonText}>LOGIN</Text>
+        </TouchableOpacity>
+
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      </View>
+    </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontFamily: 'Orbitron-Bold',
+    fontSize: 30,
+    color: '#e94560',
+    marginBottom: 50,
+    textAlign: 'center',
+    textShadowColor: 'rgba(233, 69, 96, 0.5)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    textOverflow: 'wrap',
+    maxWidth: '90%',
+  },
+  biometricButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(233, 69, 96, 0.1)',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#e94560',
+  },
+  buttonText: {
+    color: '#e94560',
+    marginLeft: 10,
+    fontFamily: 'Orbitron',
+    fontSize: 16,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 10,
+    marginBottom: 20,
+    width: '100%',
+    maxWidth: 300,
+  },
+  lockIcon: {
+    marginLeft: 15,
+  },
+  input: {
+    flex: 1,
+    color: '#fff',
+    padding: 15,
+    fontFamily: 'Roboto',
+    fontSize: 16,
+  },
+  loginButton: {
+    backgroundColor: '#e94560',
+    padding: 15,
+    borderRadius: 10,
+    width: '100%',
+    maxWidth: 300,
+    alignItems: 'center',
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontFamily: 'Orbitron-Bold',
+    fontSize: 18,
+  },
+  errorText: {
+    color: '#e94560',
+    marginTop: 20,
+    fontFamily: 'Roboto',
+  },
+});

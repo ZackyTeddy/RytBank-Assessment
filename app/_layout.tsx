@@ -1,40 +1,73 @@
-import { DarkTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts, Orbitron_500Medium, Orbitron_700Bold } from '@expo-google-fonts/orbitron';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import {
+  useFonts,
+  Orbitron_400Regular,
+  Orbitron_700Bold,
+} from "@expo-google-fonts/orbitron";
+import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
+import { StyleSheet, View } from "react-native";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    Orbitron_500Medium,
-    Orbitron_700Bold,
+  const [fontsLoaded] = useFonts({
+    Orbitron: Orbitron_400Regular,
+    "Orbitron-Bold": Orbitron_700Bold,
+    Roboto: Roboto_400Regular,
+    "Roboto-Bold": Roboto_700Bold,
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+    <View style={styles.container}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: "#1a1a2e" },
+          headerStyle: {
+            backgroundColor: "#1a1a2e",
+          },
+          headerTitleStyle: {
+            fontFamily: "Orbitron-Bold",
+            fontSize: 12,
+            color: "#e94560",
+          },
+          headerTintColor: "#e94560",
+          headerTitleAlign: "center",
+          headerShadowVisible: false,
+        }}
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: true, title: "Transactions" }}
+        />
+        <Stack.Screen
+          name="transaction/[id]"
+          options={{
+            presentation: "modal",
+            animation: "fade",
+            headerShown: true,
+            title: "Transaction Details",
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+      <StatusBar style="light" />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  stackTitle: {
+    fontFamily: "Orbitron-Bold",
+    fontSize: 28,
+    color: "#e94560",
+    marginTop: 60,
+    marginBottom: 20,
+  },
+});

@@ -1,9 +1,12 @@
-export type Transaction = {
+export interface Transaction {
 	id: string;
 	description: string;
 	amount: number;
 	type: TransactionType;
-	createdAt: Date;
+	date: string;
+}
+export interface TransactionCreate extends Omit<Transaction, 'id'> {
+	id: string;
 }
 
 export enum TransactionType {
