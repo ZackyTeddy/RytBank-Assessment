@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 import { LogOut } from 'lucide-react-native';
 
 export default function ProfileScreen() {
-  // FIXME: logout not working
   const handleLogout = () => {
     router.replace('/(auth)');
   };
