@@ -5,6 +5,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Lock, Fingerprint } from 'lucide-react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { cyberpunkColors } from '@/components/styles';
 
 export default function AuthScreen() {
   const [password, setPassword] = useState('');
@@ -46,7 +47,7 @@ export default function AuthScreen() {
 
   return (
     <LinearGradient
-      colors={['#1a1a2e', '#16213e']}
+      colors={cyberpunkColors.linearGradientBackground}
       style={styles.container}
     >
       <View style={styles.content}>
@@ -57,13 +58,13 @@ export default function AuthScreen() {
             style={styles.biometricButton}
             onPress={handleBiometricAuth}
           >
-            <Fingerprint size={32} color="#e94560" />
+            <Fingerprint size={32} color={cyberpunkColors.neonPurple} />
             <Text style={styles.buttonText}>Use Biometrics</Text>
           </TouchableOpacity>
         )}
 
         <View style={styles.passwordContainer}>
-          <Lock size={24} color="#e94560" style={styles.lockIcon} />
+          <Lock size={24} color={cyberpunkColors.neonPurple} style={styles.lockIcon} />
           <TextInput
             style={styles.input}
             placeholder="Enter Password"
@@ -100,10 +101,10 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Orbitron-Bold',
     fontSize: 30,
-    color: '#e94560',
+    color: cyberpunkColors.neonPurple,
     marginBottom: 50,
     textAlign: 'center',
-    textShadowColor: 'rgba(233, 69, 96, 0.5)',
+    textShadowColor: 'rgba(0, 255, 255, 0.5)',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
     textOverflow: 'wrap',
@@ -117,10 +118,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#e94560',
+    borderColor: cyberpunkColors.neonBlue,
   },
   buttonText: {
-    color: '#e94560',
+    color: cyberpunkColors.neonPurple,
     marginLeft: 10,
     fontFamily: 'Orbitron',
     fontSize: 16,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   loginButton: {
-    backgroundColor: '#e94560',
+    backgroundColor: cyberpunkColors.neonPurple,
     padding: 15,
     borderRadius: 10,
     width: '100%',
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: '#e94560',
+    color: cyberpunkColors.errorText,
     marginTop: 20,
     fontFamily: 'Roboto',
   },

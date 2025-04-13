@@ -9,6 +9,7 @@ import { Roboto_400Regular, Roboto_700Bold } from "@expo-google-fonts/roboto";
 import { StyleSheet } from "react-native";
 import { useFrameworkReady } from "@/hooks/useFrameworkReady";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { cyberpunkColors } from "@/components/styles";
 
 export default function RootLayout() {
   useFrameworkReady();
@@ -29,16 +30,16 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: "#1a1a2e" },
+          contentStyle: { backgroundColor: cyberpunkColors.background },
           headerStyle: {
-            backgroundColor: "#1a1a2e",
+            backgroundColor: cyberpunkColors.background,
           },
           headerTitleStyle: {
             fontFamily: "Orbitron-Bold",
             fontSize: 12,
-            color: "#e94560",
+            color: cyberpunkColors.neonPurple,
           },
-          headerTintColor: "#e94560",
+          headerTintColor: cyberpunkColors.neonPurple,
           headerTitleAlign: "center",
           headerShadowVisible: false,
         }}
@@ -58,7 +59,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </GestureHandlerRootView>
   );
 }
@@ -66,12 +67,5 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  stackTitle: {
-    fontFamily: "Orbitron-Bold",
-    fontSize: 28,
-    color: "#e94560",
-    marginTop: 60,
-    marginBottom: 20,
   },
 });

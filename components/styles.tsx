@@ -8,7 +8,11 @@ export const cyberpunkColors = {
   textPrimary: '#ffffff',        // clean white text
   textSecondary: '#b3b3b3',      // subtle gray text
   borderGlow: '#9b59ff',         // reused for border shadows
+  linearGradientBackground: ['#2d0b4e', '#110026'] as [string, string],   	//linear gradient background
+  linearGradientBackgroundDark: ['#1a042f', '#0a0015']  as [string, string],         //linear gradient background dark
+  errorText: '#e94560'           // error color
 };
+// NOTE: The linear gradient background is a tuple of two colors, which is a type-safe way to define it in TypeScript.
 
 export const styles = StyleSheet.create({
   global: {

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getTransaction } from '@/server/transactions';
 import { TransactionType } from '@/types/transaction';
+import { cyberpunkColors } from '@/components/styles';
 
 export default function TransactionDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,14 +18,13 @@ export default function TransactionDetails() {
   }
 
   return (
-    <LinearGradient
-      colors={['#1a1a2e', '#16213e']}
-      style={styles.container}
+    <View
+	      style={styles.container}
     >
       <Text style={styles.title}>TRANSACTION DETAILS</Text>
       <View style={styles.card}>
         <LinearGradient
-          colors={['rgba(169, 52, 212, 0.2)', 'rgba(22, 33, 62, 0.2)']}
+          colors={cyberpunkColors.linearGradientBackground}
           style={styles.gradientCard}
         >
           <Text style={styles.label}>DESCRIPTION</Text>
@@ -45,7 +45,7 @@ export default function TransactionDetails() {
           <Text style={styles.value}>{transaction.date}</Text>
         </LinearGradient>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -53,11 +53,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+		backgroundColor: cyberpunkColors.background,
   },
   title: {
     fontFamily: 'Orbitron-Bold',
     fontSize: 28,
-    color: '#e94560',
+    color: cyberpunkColors.neonPurple,
     marginTop: 60,
     marginBottom: 30,
   },
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#e94560',
+    borderColor: cyberpunkColors.neonBlue,
   },
   gradientCard: {
     padding: 20,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   errorText: {
     fontFamily: 'Orbitron',
     fontSize: 18,
-    color: '#e94560',
+    color: cyberpunkColors.errorText,
     textAlign: 'center',
     marginTop: 60,
   },
